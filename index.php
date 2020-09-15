@@ -7,6 +7,75 @@
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     </head>
     <body>
+        <style>
+            html, body, h1 {
+    margin: 0px;
+    padding: 0px;
+}
+
+#container {
+    text-align: center;
+    background-image: linear-gradient(rgb(72, 0, 120), gray);
+    height: 100%;
+    width: 100%;
+    
+    padding-bottom: 45px;
+}
+#header {
+    color: white;
+    font-family: 'serif';
+}
+
+
+
+h4 {
+    color: red;
+}
+
+h4 {
+    color: white;
+    font-family: serif;
+}
+
+#TZ {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+#param {
+    text-align: inherit;
+}
+select, input {
+    border-radius: 5px;
+    border: 1px;
+}
+#header a {
+    color: gray;
+    margin-left: 20px;
+}
+
+input[data-rule].valid {
+    border: 1px solid green;
+}
+.invalid {
+    border: 1px solid red;
+}
+#res {
+    border: 1px solid black;
+    width: 100%;
+    margin-top: 30px;
+
+} 
+/* границы ячеек первого ряда таблицы */
+#res th {border: 1px solid black;}
+/* границы ячеек тела таблицы */
+#res td {border: 1px solid black;}
+
+
+
+
+        </style
         <table id="container">
             <tr id="header">
                 <td>
