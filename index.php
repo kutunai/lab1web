@@ -1,3 +1,7 @@
+<?php
+        session_start();
+
+?>
 <!DOCTYPE html>
     <html lang="ru">
     <head>
@@ -7,75 +11,7 @@
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     </head>
     <body>
-        <style>
-            html, body, h1 {
-    margin: 0px;
-    padding: 0px;
-}
-
-#container {
-    text-align: center;
-    background-image: linear-gradient(rgb(72, 0, 120), gray);
-    height: 100%;
-    width: 100%;
     
-    padding-bottom: 45px;
-}
-#header {
-    color: white;
-    font-family: 'serif';
-}
-
-
-
-h4 {
-    color: red;
-}
-
-h4 {
-    color: white;
-    font-family: serif;
-}
-
-#TZ {
-    text-align: center;
-    margin-top: 40px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-}
-#param {
-    text-align: inherit;
-}
-select, input {
-    border-radius: 5px;
-    border: 1px;
-}
-#header a {
-    color: gray;
-    margin-left: 20px;
-}
-
-input[data-rule].valid {
-    border: 1px solid green;
-}
-.invalid {
-    border: 1px solid red;
-}
-#res {
-    border: 1px solid black;
-    width: 100%;
-    margin-top: 30px;
-
-} 
-/* границы ячеек первого ряда таблицы */
-#res th {border: 1px solid black;}
-/* границы ячеек тела таблицы */
-#res td {border: 1px solid black;}
-
-
-
-
-        </style
         <table id="container">
             <tr id="header">
                 <td>
@@ -103,7 +39,7 @@ input[data-rule].valid {
                             border: 1px solid red;
                             }
 
-                            =
+                            
                         </style>
                     
                     
@@ -111,7 +47,6 @@ input[data-rule].valid {
                         <h4>
                             X cord:
                                 <select name="x" class="x" id="x" required >
-                                    <option ></option>
                                     <option value="-5">-5</option>
                                     <option value="-4">-4</option>
                                     <option value="-3">-3</option>
@@ -128,7 +63,6 @@ input[data-rule].valid {
                                 Y cord:
                                 <input type="text" class="y" list="list" maxlength="4" name="y" id="y" pattern="(-)*[0-5]{1}(.)*" placeholder="Введите координату Y" required data-rule="num">
                                 <datalist id="list">
-                                <option value="-3">-3</option>
                                     <option value="-2">-2</option>
                                     <option value="-1">-1</option>
                                     <option value="0">0</option>
@@ -136,7 +70,6 @@ input[data-rule].valid {
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
-                                    <option value="5">5</option>
                                 </datalist>
 
                                 <br><br>
@@ -145,7 +78,7 @@ input[data-rule].valid {
                         <h4>
                             R value:
                             <select name="r" class="r" id="r" required >
-                                <option ></option>
+                                
                                 <option value="1" selected>1</option>
                                 <option value="1.5">1.5</option>
                                 <option value="2">2</option>
@@ -154,12 +87,14 @@ input[data-rule].valid {
                             </select>
                                 <br><br>
                         </h4>
+                        
                         <input type="submit" value="Отправить" class="otpravka">
                         <!-- </form> -->
                         
                         <script>
+                        $(document).ready(function() {
                             let inputs = document.querySelectorAll('input[data-rule]');
-                            let button = document.querySelectorAll(".button");
+                            let otpravka = document.querySelectorAll(".otpravka");
 
                             for (let input of inputs) {
                                 input.addEventListener('blur', function() {
@@ -168,20 +103,25 @@ input[data-rule].valid {
 
                                     this.classList.remove('invalid');
                                     this.classList.remove('valid');
-                                    if (value < -3 || value > 5 || value.replace(/\s/g, '').length === 0 || isNaN(value)){
+                                    // this.classList.add('invalid');
+                                    otpravka.foreach(el => {
+                                        el.disabled = true;
+                                    });
+                                    if (value <= -3 || value >= 5 || value.replace(/\s/g, '').length === 0 || isNaN(value)){
                                         this.classList.add('invalid');
-                                        button.forEach(el => {
+                                        otpravka.forEach(el => {
                                             el.disabled = true;
                                         });
                                     }
                                     else {
                                         this.classList.add('valid');
-                                        button.forEach(el => {
+                                        otpravka.forEach(el => {
                                             el.disabled = false;
                                         });
                                     }
                                 }); 
                             }
+                        });
                         </script>
                         <script>
                             $(document).ready(function() {
@@ -206,6 +146,45 @@ input[data-rule].valid {
 
                         <table id="res">
                             
+                            <?php
+                            if (!isset($_SESSION["results"])) {
+                                $_SESSION["results"] = array();
+                                array_push($_SESSION["results"], array( $x, $y, $r, $popadanie, $currentTime, $scriptTime));
+                            }
+                            echo "
+                    <tr>
+            <th>
+                <h4>X</h4>
+            </th>
+            <th>
+                <h4>Y</h4>
+            </th>
+
+            <th>
+                <h4>R</h4>
+            </th>
+
+            <th>
+                <h4>Есть пробитие?</h4>
+            </th>
+            <th>
+                <h4>Время (МСК)</h4>
+            </th>
+
+            <th>
+                <h4>Время работы скрипта PHP</h4>
+            </th>
+
+
+            </tr>";
+                            
+                        
+                        
+                            
+                               
+                            
+                            
+                            ?>
                         </table>
 
 
