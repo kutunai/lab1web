@@ -17,65 +17,134 @@
         $y = $_GET["y"];
         $r = $_GET["r"];
 
-        
-        
-        if(triangle($r, $x, $y, $currentTime, $start)){
-            // echo "Yes";
-            $popadanie = "Пробил";
-            $scriptTime = round(microtime(true) - $start, 4).' сек.';
-            array_push($_SESSION["results"], array( $x, $y, $r, $popadanie, $currentTime, $scriptTime));
-            // echo 'Время выполнения скрипта: '.round(microtime(true) - $start, 4).' сек.';
-            // echo 'Время: '.$currentTime.' сек.';
-            
-            // echo '<script>window.location.href = "index.php";</script>';
-
-        }
-        else {
-            // echo "nooo";
-            if (rectangle($r, $x, $y, $currentTime, $start)){
+        if ($x >= -5 && $x <= 3 && $y > -3 && $y < 5 && $r >= 1 && $r <= 3 && is_numeric($x) && is_numeric($y) && is_numeric($r)) {
+            if(triangle($r, $x, $y, $currentTime, $start)){
                 // echo "Yes";
                 $popadanie = "Пробил";
-            $scriptTime = round(microtime(true) - $start, 4).' сек.';
-            array_push($_SESSION["results"], array( $x, $y, $r, $popadanie, $currentTime, $scriptTime));
-
+                $scriptTime = round(microtime(true) - $start, 4).' сек.';
+                array_push($_SESSION["results"], array( $x, $y, $r, $popadanie, $currentTime, $scriptTime));
                 // echo 'Время выполнения скрипта: '.round(microtime(true) - $start, 4).' сек.';
                 // echo 'Время: '.$currentTime.' сек.';
-
-
-                // echo '<script>window.location.href = "index.php?x=$x&y=$y&r=$r";</script>';
-
+                
+                // echo '<script>window.location.href = "index.php";</script>';
+    
             }
             else {
-                // echo "nonononon";
-                if (sector($r, $x, $y, $currentTime, $start)) {
-                    // echo "Yeeeeeaaaass";
+                // echo "nooo";
+                if (rectangle($r, $x, $y, $currentTime, $start)){
+                    // echo "Yes";
                     $popadanie = "Пробил";
-            $scriptTime = round(microtime(true) - $start, 4).' сек.';
-            array_push($_SESSION["results"], array( $x, $y, $r, $popadanie, $currentTime, $scriptTime));
-
+                    $scriptTime = round(microtime(true) - $start, 4).' сек.';
+                    array_push($_SESSION["results"], array( $x, $y, $r, $popadanie, $currentTime, $scriptTime));
+    
                     // echo 'Время выполнения скрипта: '.round(microtime(true) - $start, 4).' сек.';
-                // echo 'Время: '.$currentTime.' сек.';
-
-
+                    // echo 'Время: '.$currentTime.' сек.';
+    
+    
                     // echo '<script>window.location.href = "index.php?x=$x&y=$y&r=$r";</script>';
+    
                 }
                 else {
-                    // echo "NOOOOOOOOO";
-                    $popadanie = "Не пробил";
-            $scriptTime = round(microtime(true) - $start, 4).' сек.';
-            array_push($_SESSION["results"], array( $x, $y, $r, $popadanie, $currentTime, $scriptTime));
-
-                    // echo 'Время выполнения скрипта: '.round(microtime(true) - $start, 4).' сек.';
-                // echo 'Время: '.$currentTime.' сек.';
-
-                    // echo '<script>window.location.href = "index.php?x=$x&y=$y&r=$r";</script>';
+                    // echo "nonononon";
+                    if (sector($r, $x, $y, $currentTime, $start)) {
+                        // echo "Yeeeeeaaaass";
+                        $popadanie = "Пробил";
+                        $scriptTime = round(microtime(true) - $start, 4).' сек.';
+                        array_push($_SESSION["results"], array( $x, $y, $r, $popadanie, $currentTime, $scriptTime));
+    
+                        // echo 'Время выполнения скрипта: '.round(microtime(true) - $start, 4).' сек.';
+                        // echo 'Время: '.$currentTime.' сек.';
+    
+    
+                        // echo '<script>window.location.href = "index.php?x=$x&y=$y&r=$r";</script>';
+                    }
+                    else {
+                        // echo "NOOOOOOOOO";
+                        $popadanie = "Не пробил";
+                $scriptTime = round(microtime(true) - $start, 4).' сек.';
+                array_push($_SESSION["results"], array( $x, $y, $r, $popadanie, $currentTime, $scriptTime));
+    
+                        // echo 'Время выполнения скрипта: '.round(microtime(true) - $start, 4).' сек.';
+                    // echo 'Время: '.$currentTime.' сек.';
+    
+                        // echo '<script>window.location.href = "index.php?x=$x&y=$y&r=$r";</script>';
+                    }
                 }
             }
+            echo "
+                    <tr>
+            <th>
+                <h4>X</h4>
+            </th>
+            <th>
+                <h4>Y</h4>
+            </th>
+
+            <th>
+                <h4>R</h4>
+            </th>
+
+            <th>
+                <h4>Есть пробитие?</h4>
+            </th>
+            <th>
+                <h4>Время (МСК)</h4>
+            </th>
+
+            <th>
+                <h4>Время работы скрипта PHP</h4>
+            </th>
+
+
+            </tr>";
+
+                           
+            foreach ($_SESSION["results"] as $results) {
+                echo "
+                <tr>
+                <td>
+                <span>$results[0]</span>
+                </td>
+                <td>
+                <span>$results[1]</span>
+                </td>
+                <td>
+                <span>$results[2]</span>
+                </td>
+                <td>
+                <span>$results[3]</span>
+                </td>
+                <td>
+                <span>$results[4]</span>
+                </td>
+                <td>
+                <span>$results[5]</span>
+                </td>
+                </tr>";
+            }
+        
         }
+        else {
+            
+                echo "
+                ВЫ ВВЕЛИ НЕКОРРЕКТНЫЕ ДАННЫЕ!
+        
+                ";
+                
+                                
+
+            
+            
+            
+           
+        }   
+    }
+    
+       
 
         
-
-    }
+        
+        
     
     
 
@@ -150,68 +219,7 @@
 
         // echo pow($_GET["r"], 2) * 2;
     }
-    $currentTime_oldold = $currentTime_old;
-    $popadanie_oldold = $popadanie_old;
-    $scriptTime_oldold = $scriptTime_old;
-    $x_oldold = $x_old;
-    $y_oldold = $y_old;
-    $r_oldold = $r_old;
-    $currentTime_old = $currentTime;
-    $popadanie_old = $popadanie;
-    $scriptTime_old = $scriptTime;
-    $x_old = $x;
-    $y_old = $y;
-    $r_old = $r;
-    echo $x_old;
+    
 ?>
-<tr>
-                                <th>
-                                    <h4>X</h4>
-                                </th>
-                                <th>
-                                    <h4>Y</h4>
-                                </th>
-                                
-                                <th>
-                                    <h4>R</h4>
-                                </th>
-
-                                <th>
-                                    <h4>Есть пробитие?</h4>
-                                </th>
-                                <th>
-                                    <h4>Время (МСК)</h4>
-                                </th>
-                                
-                                <th>
-                                    <h4>Время работы скрипта PHP</h4>
-                                </th>
-
-
-                            </tr>
-                            <?php
-                            foreach ($_SESSION["results"] as $results) {
-                            echo "
-                            <tr>
-                                <td>
-                                    <span> $results[0]</span>
-                                </td>
-                                <td>
-                                    <span>$results[1]</span>
-                                </td>
-                                <td>
-                                    <span>$results[2]</span>
-                                </td>
-                                <td>
-                                    <span>$results[3]</span>
-                                </td>
-                                <td>
-                                    <span>$results[4]</span>
-                                </td>
-                                <td>
-                                    <span>$results[5]</span>
-                                </td>
-                            </tr>";
-                            }
-                            ?>
                             
+
